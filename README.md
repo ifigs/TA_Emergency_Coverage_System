@@ -3,6 +3,7 @@
 http://students.engr.scu.edu/~schaudhr/TA-Emergency-Coverage-System/home.html
 
 To see how a TA account works, you can use the following credentials:
+
 username: santaclara
 password: taemergency
 
