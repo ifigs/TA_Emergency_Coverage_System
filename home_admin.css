@@ -1,0 +1,164 @@
+body {
+	font-family: helvetica;
+	color: white;
+	background-color: #9E9EFF;
+}
+
+h1{
+	text-align: center;
+}
+
+table {
+	font-family: helvetica;
+	border-spacing: 0;
+	border-collapse: separate;
+	table-layout: fixed;
+	margin-bottom: 10px;
+	min-width: 100%;
+}
+
+table thead tr th {
+	background: #9E9EFF;
+	color: white;
+	padding: 0.5em;
+	overflow: hidden;
+}
+
+table thead tr th:first-child {
+	border-radius: 1px 0 0 0;
+}
+
+table thead tr th:last-child {
+	border-radius: 0 1px  0 0;
+}
+
+table thead tr th i {
+	vertical-align: middle;
+	font-size: 2em;
+}
+
+table tbody tr {
+	background: #4f4f7d;
+}
+
+table tbody tr:nth-child(odd) {
+	background: #4a4976;
+}
+
+table tbody tr td {
+	text-align: center;
+	vertical-align: middle;
+	border-left: 1px solid #9E9EFF;
+	position: relative;
+	height: 19px;
+}
+
+table tbody tr td:last-child {
+	border-right: 1px solid #9E9EFF;
+}
+
+.popup {
+	display: none;
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.7);
+	padding-top: 60px;
+}
+
+.container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	padding: 20px;
+	min-width: 25%;
+	width: auto;
+	background-color: #8080ff;
+	opacity: 1;
+	text-align: center;
+	color: white;
+	border-radius: 5px;
+}
+
+.container h2 {
+	margin-top: 0;
+}
+
+.close {
+	position: absolute;
+	right: 5%;
+	top: 0;
+	color: #000;
+	font-size: 35px;
+	font-weight: bold;
+}
+.close:hover,
+.close:focus {
+	color: white;
+	cursor: pointer;
+}
+
+#repeat_info {
+//	display: none;
+}
+
+.animate {
+	-webkit-animation: fade 1s;
+	-moz-animation: fade 1s;
+	animation: fade 1s
+}
+
+ul {
+	list-style: none;
+	padding-left:0;
+}
+
+.right-click-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #ddddee;
+	opacity: 0.99;
+    color: black;
+    border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+}
+
+@-webkit-keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+    
+@-moz-keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+    
+@keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+@media (max-width: 60em) {
+//when it's a small screen
+
+
+}
+
+@media (max-width: 50em) {
+	table thead tr th {
+		font-size: 90%;
+	}
+
+}
+

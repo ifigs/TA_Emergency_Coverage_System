@@ -1,0 +1,59 @@
+input[type=text], select {
+	//width: 100%;
+	font-size: 12px;
+	font-family: helvetica;
+	padding: 12px 20px;
+	margin: 10px 0;
+	//display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+input[type=password], select {
+	//width: 100%;
+	font-size: 12px;
+	font-family: helvetica;
+	padding: 12px 20px;
+	margin: 8px 0;
+	//display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+
+.Button{
+	-moz-border-radius: 28px;
+	-webkit-border-radius: 28px;
+	border-radius: 28px;
+	border-top: white 1px solid;
+	border-left: white 1px solid;
+	border-right: white 1px solid;
+	border-bottom: white 3px solid;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 12px;
+	font-family: helvetica;
+	padding: 6px 14px;
+	text-decoration: none;
+	//text-shadow:0px 1px 0px #ffffff;
+	text-align: center;
+	//background-color: #FFF5EE;
+	//color: #505739;
+	color: white;
+	background-color: #4855a8;
+}
+
+.Button:hover {
+	background-color: #5f6ab9;
+//	opacity: 0.8;
+}
+
+.Button:active {
+	position: relative;
+	border-top: white 1px solid;
+	border-left: white 1px solid;
+	border-right: white 1px solid;
+	border-bottom: white 1px solid;
+	top: 3px;
+}

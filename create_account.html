@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+ <meta charset="UTF-8">
+<head>
+<title>TA Emergency Coverage System</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="md5.new.js"></script>
+<script src="create_account.js"></script>
+<link rel="stylesheet" href="button_and_input.css">
+
+<style>
+body {
+	font-family: helvetica;
+	color: white;
+	background-color: #9E9EFF;
+	text-align: center;
+}
+
+.error {
+	display: inline-block;
+	color: #ffeda3;
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 2px;
+}
+
+form p label {
+	display: inline-block;
+	position: relative;
+	text-align: left;
+	width:200px;
+}
+form {
+	margin-right: 200px;
+}
+
+#submit_button {
+	margin-right: -200px;
+}
+
+#box {
+        box-shadow: 0 0 1em #9292fc;
+        background-color: #a6a6ff;
+        border-style: solid;
+}
+
+</style>
+
+
+</head>
+
+<body onload="initialization()">
+
+
+
+<h1>SCU TA Emergency Coverage System</h1>
+<br>
+<div id="box">
+
+<h3>Create an Account</h3>
+
+<form id="form">
+<p>
+  <label for="username">Username (must be unique)</label>
+  <input type="text"id="username" name="username" placeholder="Username" required><span class="error" id="user_error"></span>
+</p>
+<p>
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password" placeholder="Password" required><span class="error" id="password_error"></span>
+<p>
+  <label for="confirm_password">Confirm Password</label>
+  <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required><span class="error" id="password_confirm_error"></span>
+</p>
+<p>
+  <label for="first_name">First Name</label>
+  <input type="text" id="first_name" name="first_name" placeholder="First Name" required><span class="error" id="first_error"></span>
+</p>
+<p>
+  <label for="last_name">Last Name</label>
+  <input type="text" id="last_name" name="last_name" placeholder="Last Name" required><span class="error" id="last_error"></span>
+</p>
+<p>
+  <label for="email">Email</label>
+  <input type="text" id="email" name="email" placeholder="Email"required><span class="error" id="email_error"></span>
+</p>
+<p>
+  <label for="phone_number">Phone Number</label>
+  <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number" required><span class="error" id="phone_error"></span>
+</p>
+<p>
+  <label for="code">Permission Code</label>
+  <input type="text" id="code" name="code" placeholder="Permission Code" required><span class="error" id="code_error"></span>
+</p>
+<p>
+  <label for="dept1">Department</label>
+  <input type="text" id="dept1" name="dept1" placeholder="Primary Department" required><span class="error" id="dept1_error"></span>
+</p>
+<p>
+  <label for="dept2">Second Department</label>
+  <input type="text" id="dept2" name="dept2" placeholder="2nd Department (optional)"><span class="error" id="dept2_error"></span>
+</p>
+  <br>
+  <input class="Button" type="submit" id="submit_button" value="Create Account">
+</form>
+<br>
+
+</div>
+
+<br>
+<input class="Button" type="button" onclick="location.href='login.html';" value="Cancel" />
+
+<script>
+$(window).resize(function() {
+	if ($(window).width() < 576) {
+		$('form').css('margin-right', '');
+		$('form').css('width', 'auto');
+		$('form').css('margin', 'auto');
+		$('form').css('text-align', 'center');
+		$('#submit_button').css('margin-right', '');
+		$('#submit_button').css('width', 'auto');
+		$('#submit_button').css('margin', 'auto');
+		$('.error').css('display', 'flex');
+		$('.error').css('margin-top', '0px');
+		$('.error').css('margin-left', '0px');
+	}
+	
+	else if ($(window).width() >= 576) {
+		$('form').css('margin-right', '200px');
+		$('#submit_button').css('margin-right', '-200px');
+		$('#submit_button').css('margin', '');
+		$('#submit_button').css('width', '');
+		$('.error').css('display', 'inline-block');
+		$('.error').css('margin-top', '20px');
+		$('.error').css('margin-left', '2px');
+	}
+});
+// Bind to the submit event of our form
+$("#form").submit(function(event){
+	document.getElementById( "first_error" ).innerHTML = "";
+	document.getElementById( "last_error" ).innerHTML = "";
+	document.getElementById( "user_error" ).innerHTML = "";
+	document.getElementById( "email_error" ).innerHTML = "";
+	document.getElementById( "password_error" ).innerHTML = "";
+	document.getElementById( "email_error" ).innerHTML = "";
+	document.getElementById( "password_confirm_error" ).innerHTML = "";
+	document.getElementById( "phone_error" ).innerHTML = "";
+	document.getElementById( "code_error" ).innerHTML = "";
+	document.getElementById( "dept1_error" ).innerHTML = "";
+	document.getElementById( "dept2_error" ).innerHTML = "";
+
+	var flag = validate();
+	if (flag == true){
+		// Prevent default posting of form - put here to work in case of errors
+		event.preventDefault();
+		// setup some local variables
+		var fname = $("input#first_name").val();
+		var lname =  $("input#last_name").val();
+		var username = $("input#username").val();
+		var password = $("input#password").val()
+		var email = $("input#email").val();
+		var phone_number = $("input#phone_number").val();
+		var code = $("input#code").val();
+		var dept1 = $("input#dept1").val();
+		var dept2 = $("input#dept2").val();
+
+		// Generate the salt
+		var salt = makeSalt();
+		var hashedpw = calcMD5(salt + password);
+
+		// Serialize the data in the form
+		var serializedData = 'dept1='+dept1+'&dept2='+dept2+'&first_name='+fname+'&last_name='+lname+
+		'&username='+username+'&salt='+salt+'&hashedpw='+hashedpw+'&email='+email+'&code='+code+'&phone_number='+phone_number;
+
+		// Fire off the request to /form.php
+		$.ajax({
+			url: "create_account.php",
+			type: "POST",
+			data: serializedData,
+			success: function(data)
+			{
+				//console.log("database successful !!!!!");
+				alert(data);
+				window.location.href = "login.html";
+			}
+		});
+	//console.log("didn't work");
+	return false;
+}
+else{return flag;}
+});
+function validate()
+{
+	var error="";
+	var return_flag = true;
+	var fname = document.getElementById( "first_name" );
+	if( fname.value == "") {
+		error = "First name is required.";
+		document.getElementById( "first_error" ).innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "first_error" ).innerHTML = "";}
+
+	var username = document.getElementById( "username" );
+	if(username.value == "" || (username.value).length > 50) {
+		error = "User name is required.";
+		document.getElementById( "user_error" ).innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "user_error" ).innerHTML = "";}
+
+	var lname = document.getElementById( "last_name" );
+	if( lname.value == "" ){
+		error = "Last name is required.";
+		document.getElementById( "last_error" ).innerHTML = error;
+		return_flag =  false;
+	}
+	else{document.getElementById( "first_error" ).innerHTML = "";}
+
+	var email = document.getElementById( "email" );
+	if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+		document.getElementById( "email_error" ).innerHTML = "";
+	}
+	else{
+		error = "Invalid Email Address.";
+		document.getElementById( "email_error" ).innerHTML = error;
+		return_flag = false;
+	}
+	 var password = document.getElementById( "password" );
+	 if( password.value == "" || (password.value).length < 8 ){
+		error = " Password must be at least 8 characters.";
+		document.getElementById( "password_error" ).innerHTML = error;
+		return_flag = false;
+	 }
+	 else{document.getElementById( "password_error" ).innerHTML = "";}
+
+	if(password.value != confirm_password.value){
+		error = "Passwords do not match.";
+		document.getElementById("password_confirm_error").innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "password_confirm_error" ).innerHTML = "";}
+
+	var code = document.getElementById("code");
+	if(code.value == ""){
+		error = "Code is missing.";
+		document.getElementById("code_error").innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "code_error" ).innerHTML = "";}
+	var phone = document.getElementById("phone_number");
+	if(phone.value == "" || (phone.value).length != 10) {
+		error = "Phone number needs to be 10 digits.";
+		document.getElementById("phone_error").innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "phone_error" ).innerHTML = "";}
+
+	var dept1 = document.getElementById("dept1");
+	if(dept1.value == "" || (dept1.value).length != 4) {
+		error = "Name needs to be 4 characters (e.g. COEN)";
+		document.getElementById("dept1_error").innerHTML = error;
+		return_flag = false;
+	}
+	else{document.getElementById( "dept1_error" ).innerHTML = "";}
+
+	var dept2 = document.getElementById("dept2");
+	if(dept2.value != "") {
+	    if ((dept2.value).length != 4){
+		error = "Needs to be 4 characters (e.g. COEN)";
+		document.getElementById("dept2_error").innerHTML = error;
+		return_flag = false;
+	    }
+	    else{document.getElementById( "dept2_error" ).innerHTML = "";}
+	}
+
+	return return_flag;
+}
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<!-- this is a professor's home page -->
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="home_admin.css">
+	<title>TA Emergency Coverage System</title>
+
+	<script src="jquery-3.2.1.js"></script>
+	<script src="jquery-ui.js"></script>
+	<script src="home_admin.js"></script>
+<link rel="stylesheet" href="button_and_input.css">
+
+
+	<button style="float: right" class="Button" type="button" onclick="logout();">Logout</button>
+        <button style="float: right; margin-right: 2px;" class="Button" type="button" onclick="window.location.href='edit_profile.html'">Edit Profile</button>
+
+<style>
+
+.delete_button{
+        -moz-box-shadow: 0px 1px 0px 0px #aab8d1;
+        -webkit-box-shadow: 0px 1px 0px 0px #aab8d1;
+        box-shadow: 0px 1px 0px 0px #aab8d1;
+        -moz-border-radius:15px;
+        -webkit-border-radius:15px;
+        border-radius:15px;
+        border:1px solid white;
+        display:inline-block;
+        cursor:pointer;
+        //background-color: #dae2f0;
+        background-color: #FFF5EE;
+        color:#505739;
+        font-size:10px;
+        font-family: helvetica;
+        padding:4px 10px;
+        text-decoration:none;
+        //text-shadow:0px 1px 0px #ffffff;
+        text-align: center;
+}
+.delete_button:hover {
+        background-color:#f0f6ff;
+}
+.delete_button:active {
+        position:relative;
+        top:1px;
+}
+
+</style>
+
+
+</head>
+
+<body onload="initialization()">
+	<br>
+	<h1>SCU TA Emergency Coverage System</h1>
+	<br>
+	<h3>Welcome, <span id=fname_welcome></span>.</h3>
+
+  <br>
+
+	<button type="button" class="Button" onclick="invite_admin();">Invite Admin</button>
+	<button type="button" class="Button" onclick="invite_professor();">Invite Professor</button>
+	<button type="button" class="Button" onclick="invite_ta();">Invite TA</button>
+<br>
+
+
+	<br>
+	<h4>TAs and Professors Registered in the System: </h4>
+	<div id="all_tas"></div>
+
+
+  <table id="ta_table">
+  <tr>
+    <th>Delete</th>
+<!--    <th>Edit</th> -->
+    <th>Username</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Account Type</th>
+    <th>Department(s)</th>
+  </tr>
+  </table>
+
+
+</body>
+</html>

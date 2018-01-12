@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="button_and_input.css">
+	<!-- <script src="md5.min.js"></script> -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+	<script src="jquery-3.2.1.js"></script>
+	<script src="login.js"></script>
+
+<style>
+body {
+	font-family: helvetica;
+	color: white;
+	background-color: #9E9EFF;
+	text-align: center;
+}
+
+#box {
+box-shadow: 0 0 1em #9292fc;
+background-color: #a6a6ff;
+
+}
+
+</style>
+
+
+
+</head>
+
+<body onload="initialization()">
+
+
+<h1>SCU TA Emergency Coverage System</h1>
+
+<div id="box" style="width: 550px; margin: auto; border-style:solid;">
+
+<div id="form">
+  <br>
+  <input type="text" id="username" placeholder="Username" value=""/>
+  <br>
+  <br>
+  <input type="password" id="password" placeholder="Password"/>
+  <br><br>
+  <button type="button" class="Button" onclick="login();" id='login'>Login</button>
+</div>
+
+<br>
+</div>
+<br>
+
+<p>Don't have an account?<p>
+<button type="button" class="Button" onclick="window.location='create_account.html'" id='login'>Sign Up</button>
+
+
+
+<script>
+function initialization(){
+        if ($(window).width() < 572) {
+                $('#box').css('margin', 'auto');
+                $('#box').css('width', 'auto');
+        }
+
+}
+$(window).resize(function() {
+        if ($(window).width() < 576) {
+                $('#box').css('margin', 'auto');
+                $('#box').css('width', 'auto');
+        }
+        
+        else if ($(window).width() >= 576) {
+                $('#box').css('margin', 'auto');
+                $('#box').css('width', '550px');
+        }
+});
+
+
+</script>
+
+
+</body>
+
+
+</html>

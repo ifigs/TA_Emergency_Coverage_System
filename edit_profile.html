@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+ <meta charset="UTF-8">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="button_and_input.css">
+
+<style>
+input[type=text], select {
+    align-items: end;
+    display: inline-block;
+}
+
+.error {
+    /*display: inline-block;
+    text-align: justify;*/
+    color: pink;
+}
+
+body {
+	font-family: helvetica;
+	color: white;
+	background-color: #9E9EFF;
+	text-align: center;
+}
+
+#box {
+	box-shadow: 0 0 1em #9292fc;
+	background-color: #a6a6ff;
+	border-style: solid;
+}
+
+
+</style>
+
+
+</head>
+
+<body onload="initialization()">
+
+
+
+<h1>SCU TA Emergency Coverage System</h1>
+<br>
+<h3>Edit Account Information</h3>
+
+<div id="box">
+
+<h5 id="account_type"></h5>
+
+<p>Enter any information that you would like to change. If you do not wish to change a field, leave it empty.</p>
+
+<!-- need to fix this php stuff -->
+<form id="form" >
+  <label for="password">Password</label><br>
+  <input type="text" id="password" name="password" placeholder="Change Password"><p class="error" id="password_error"></p>
+  <label for="confirm_password">Confirm Password</label><br>
+  <input type="text" id="confirm_password" name="confirm_password" placeholder="Confirm New Password"><p class="error" id="password_confirm_error"></p>
+  <label for="first_name">First Name</label><br>
+  <input type="text" id="first_name" name="first_name" placeholder="First Name"><p class="error" id="first_error"></p>
+  <label for="last_name">Last Name</label><br>
+  <input type="text" id="last_name" name="last_name" placeholder="Last Name"><p class="error" id="last_error"></p>
+  <label for="email">Email</label><br>
+  <input type="text" id="email" name="email" placeholder="Email"><p class="error" id="email_error"></p>
+  <label for="phone_number">Phone Number</label><br>
+  <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number"><p class="error" id="phone_error"></p>
+  <input type="submit" class="Button" id="submit_button" value="Edit Profile">
+</form>
+<br>
+
+</div>
+
+<br>
+<input class="Button" type="button" onclick="window.history.back();" value="Cancel" />
+
+<script>
+
+function initialization(){
+
+	var code = localStorage.getItem('session_code');
+	if(code == null){
+		window.location.href = 'login.html';
+	}
+
+}
+
+
+// Bind to the submit event of our form
+$("#form").submit(function(event){
+	var flag = validate();
+
+	if (flag == true){
+		// Prevent default posting of form - put here to work in case of errors
+		event.preventDefault();
+
+		// setup some local variables
+		var fname = $("input#first_name").val();
+		var lname =  $("input#last_name").val();
+		var username = localStorage.getItem('username');
+		var password = $("input#password").val()
+		var email = $("input#email").val();
+		var phone_number = $("input#phone_number").val();
+
+		// Serialize the data in the form
+		var serializedData = 'first_name='+fname+'&last_name='+lname+'&username='+username+'&password='+password+'&email='+email+'&phone_number='+phone_number;
+
+		// Fire off the request to /form.php
+		$.ajax({
+			url: "edit_profile.php",
+			type: "POST",
+			data: serializedData,
+			success: function(data)
+			{
+				//console.log("database successful !!!!!");
+				alert(data);
+			}
+		});
+		//console.log("didn't work");
+		return false;
+
+	}
+	else{return flag;}
+
+});
+
+
+
+function validate()
+{
+ var error="";
+var return_flag = true;
+
+ var email = document.getElementById( "email" );
+ if( email.value != ""){ 
+	if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))
+ 	{	
+   		document.getElementById( "email_error" ).innerHTML = "";
+ 	}
+	 else{
+	   error = "Invalid Email Address.";
+	   document.getElementById( "email_error" ).innerHTML = error;
+	   return_flag = false;
+	   }
+}
+
+ var password = document.getElementById( "password" );
+ if(password.value != "" && (password.value).length < 8 )
+ {
+  error = " Password must be at least 8 characters. ";
+  document.getElementById( "password_error" ).innerHTML = error;
+  return_flag = false;
+ }
+ else{document.getElementById( "password_error" ).innerHTML = "";}
+
+
+if(password.value != confirm_password.value)
+{
+	error = "Passwords do not match.";
+	document.getElementById("password_confirm_error").innerHTML = error;
+	return_flag = false;
+}
+else{document.getElementById( "password_confirm_error" ).innerHTML = "";}
+
+
+var phone = document.getElementById("phone_number");
+if((phone.value).length != 10 && phone.value != "")
+{
+	error = "Phone number needs to be 10 digits.";
+	document.getElementById("phone_error").innerHTML = error;
+	return_flag = false;
+}
+else{document.getElementById( "phone_error" ).innerHTML = "";}
+
+
+return return_flag;
+
+}
+</script>
+</body>
+
+
+</html>

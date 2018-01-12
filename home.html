@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>TA Emergency Coverage System</title>
+
+		<link rel="stylesheet" type="text/css" href="home.css">
+		<link rel="stylesheet" href="jquery-ui.css">
+		<link rel="stylesheet" href="button_and_input.css">
+		<script src="jquery-3.2.1.js"></script>
+		<script src="jquery-ui.js"></script>
+		<script src="home.js"></script>
+
+		<button class="Button" style="float: right" type="button" onclick="logout();">Logout</button>
+		<button class="Button" style="float: right; margin-right:3px;" type="button" onclick="window.location.href='edit_profile.html'">Edit Profile</button>
+
+
+<style>
+input.popup_input {
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+</style>
+
+
+	</head>
+
+	<body>
+		<br>
+		<h1>SCU TA Emergency Coverage System</h1>
+		<br>
+		<h3>Welcome, <span id=fname_welcome></span></h3>
+
+		<button class="Button" style="float: right" type="button" onclick="document.getElementById('add_event').style.display='block'">Add Event</button>
+
+		<div class="popup" id="replacements">
+			<div class="container animate" id="replacements_content">
+				<div class="close_button">
+					<span onclick="removeReplacements();" class="close" title="Close Find Replacement">&times;</span>
+				</div>
+				<h2>Available TAs</h2>
+			</div>
+		</div>
+
+		<div class="popup" id="add_event">
+			<form class="add-event-content animate" id="event_form">
+				<div class="container" id="content">
+					<div class="close_button">
+						<span onclick="document.getElementById('add_event').style.display='none'" class="close" title="Close Add Event">&times;</span>
+					</div>
+					<h2 style="padding-top: 0px">New Event</h2>
+					<div style="max-height: 70vh; overflow: auto;">
+					<label>Title</label>
+					<br>
+					<input type="text" class="popup_input" placeholder="Title" name="title" id="title" required>
+					<br>
+					<br>
+					<label>Date</label>
+					<br>
+					<input type="text" class="popup_input" placeholder="Date" name="date" id="datepicker" required>
+					<br>
+					<br>
+					<label>Start Time</label>
+					<br>
+					<!--<input type="time" placeholder="Start Time" name="start_time" id="start_time">-->
+					<select class="popup_input" id="start_hour" name="start_hour">
+						<option value="0">7</option>
+						<option value="1">8</option>
+						<option value="2">9</option>
+						<option value="3">10</option>
+						<option value="4">11</option>
+						<option value="5">12</option>
+						<option value="6">1</option>
+						<option value="7">2</option>
+						<option value="8">3</option>
+						<option value="9">4</option>
+						<option value="10">5</option>
+						<option value="11">6</option>
+						<option value="12">7</option>
+						<option value="13">8</option>
+						<option value="14">9</option>
+					</select> <span>:</span>
+					<select class="min" id="start_min" name="start_min"></select>
+					<span id='start_meridiem'>am</span>
+					<br>
+					<br>
+					<label>End Time</label>
+					<br>
+					<!--<input type="time" placeholder="End Time" name="end_time" id="end-time">-->
+					<select id="end_hour" class="popup_input" name="end_hour">
+						<option value="0">7</option>
+						<option value="1">8</option>
+						<option value="2">9</option>
+						<option value="3">10</option>
+						<option value="4">11</option>
+						<option value="5">12</option>
+						<option value="6">1</option>
+						<option value="7">2</option>
+						<option value="8">3</option>
+						<option value="9">4</option>
+						<option value="10">5</option>
+						<option value="11">6</option>
+						<option value="12">7</option>
+						<option value="13">8</option>
+						<option value="14">9</option>
+					</select> <span>:</span>
+					<select class="min" id="end_min" name="end_min"></select>
+					<span id='end_meridiem'>am</span>
+					<br>
+					<br>
+					TA Event?
+					<br>
+					<input type="radio" name="ta_event" required value="yes">Yes
+					<input type="radio" name="ta_event" value="no">No
+					<br>
+					<br>
+					<label>Department</label>
+					<br>
+					<input required disabled type="text" id="department" class="popup_input" name="department" placeholder="Department">
+					<br>
+					<br>
+<!--
+					<input type="checkbox" name="repeat" id="repeat" value="repeat">Repeat
+					<br>
+					<div id="repeat_info">
+						<label>Select the days on which you want this event to repeat.</label>
+						<br>
+						<select multiple name="repeat_days[]" disabled>
+							<option value="sunday">Sunday</option>
+							<option value="monday">Monday</option>
+							<option value="tuesday">Tuesday</option>
+							<option value="wednesday">Wednesday</option>
+							<option value="thursday">Thursday</option>
+							<option value="friday">Friday</option>
+							<option value="saturday">Saturday</option>
+						</select>
+						<br>
+						<input disabled type="text" class="popup_input" placeholder="End Repeat" name="end_repeat" id="datepicker2">
+					</div>
+					<br>
+-->
+					<input class="Button" style="margin-bottom: 3px !IMPORTANT;" type="submit" value="Add Event" id="button">
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="menu">
+			<ul class="right-click-menu ta_event">
+				<li id="find_replacement" data-action="find_replacement">Find Replacement</li>
+				<li data-action="delete_event">Delete Event</li>
+			</ul>
+			<ul class="right-click-menu busy_event">
+				<li data-action="delete_event">Delete Event</li>
+			</ul>
+		</div>
+
+		<script>
+			for (i=0; i<60; i+=5) {
+				var x = ("0" + i).slice(-2);
+				$(".min").append("<option value='"+i+"'>"+x+"</option>");
+			}
+
+/*
+			function de(element) {
+				console.log("keyboard delete");
+				$(this).keydown(function(e) {
+					if ((element.classList.contains("selected")) && (e.keyCode == 46 || e.keyCode == 8)) {
+						contextTarget = element;
+						delete_event();
+						$(this).off("keydown");
+					}
+				})
+			}
+*/
+		</script>
+
+		<br>
+		<br>
+		<button class="Button" style="float: right; margin-bottom: 2px;" type="button" onclick="next_button()">Next Week</button>
+		<button class="Button" style="float: right; margin-bottom: 2px; margin-right: 2px;" type="button" onclick="current_button()">Current Week</button>
+		<button class="Button" style="float: right; margin-bottom: 2px; margin-right: 2px;" type="button" onclick="back_button()">Previous Week</button>
+		<div style="margin-right: 3.5%;">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<table>
+				<thead>
+					<tr>
+						<th class="hour"></th>
+						<th id="14">
+							<span id="0" class="longday"></span>
+							<span id="7" class="shortday"></span>
+							<span class="long">Sunday</span>
+							<span class="short">Sun</span>
+						</th>
+						<th id="15">
+							<span id="1" class="longday"></span>
+							<span id="8" class="shortday"></span>
+							<span class="long">Monday</span>
+							<span class="short">Mon</span>
+						</th>
+						<th id="16">
+							<span id="2" class="longday"></span>
+							<span id="9" class="shortday"></span>
+							<span class="long">Tuesday</span>
+							<span class="short">Tue</span>
+						</th>
+						<th id="17">
+							<span id="3" class="longday"></span>
+							<span id="10" class="shortday"></span>
+							<span class="long">Wendsday</span>
+							<span class="short">Wed</span>
+ 						</th>
+						<th id="18">
+							<span id="4" class="longday"></span>
+							<span id="11" class="shortday"></span>
+							<span class="long">Thursday</span>
+							<span class="short">Thur</span>
+						</th>
+						<th id="19">
+							<span id="5" class="longday"></span>
+							<span id="12" class="shortday"></span>
+							<span class="long">Friday</span>
+							<span class="short">Fri</span>
+						</th>
+						<th id="20">
+							<span id="6" class="longday"></span>
+							<span id="13" class="shortday"></span>
+							<span class="long">Saturday</span>
+							<span class="short">Sat</span>
+						</th>
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr>
+						<td class="hour" rowspan="2"><span>7am</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>8am</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>9am</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>10am</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>11am</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>12pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>1pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>2pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>3pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>4pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>5pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>6pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>7pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>8pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>9pm</span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+ 					</tr>
+					<tr>
+						<td class="hour" rowspan="2"><span>10pm</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

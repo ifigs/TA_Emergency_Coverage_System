@@ -1,0 +1,365 @@
+body {
+	font-family: helvetica;
+	color: white;
+	background-color: #9E9EFF;
+}
+
+h1{
+	text-align: center;
+}
+
+table {
+	font-family: helvetica;
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: separate;
+	table-layout: fixed;
+	margin-bottom: 10px;
+}
+
+table thead tr th {
+	background: #9E9EFF;
+	color: white;
+	padding: 0.5em;
+	overflow: hidden;
+}
+
+table thead tr th:first-child {
+	border-radius: 3px 0 0 0;
+}
+
+table thead tr th:last-child {
+	border-radius: 0 3px  0 0;
+}
+
+table .hour {
+	width: 6%;
+}
+
+table thead tr th .longday {
+	display: block;
+	color: white;
+	font-size: 1.2em;
+	border-radius: 50%;
+	margin: 0 auto 5px;
+	padding: 0px;
+	line-height: 1.0;
+}
+
+
+table thead tr th .shortday {
+	display: none;
+}
+table thead tr th .short {
+	display: none;
+}
+
+table thead tr th .day.active {
+	background: #d1d5db;
+	color: black;
+}
+
+table thead tr th i {
+	vertical-align: middle;
+	font-size: 2em;
+}
+
+table tbody tr {
+	background: #4f4f7d;
+}
+
+table tbody tr:nth-child(odd) {
+	background: #4a4976;
+}
+
+table tbody tr:nth-child(2n+0) td {
+	border-bottom: 1px solid #9E9EFF;
+}
+
+table tbody tr td {
+	text-align: center;
+	vertical-align: middle;
+	border-left: 3px solid #9E9EFF;
+	position: relative;
+	height: 19px;
+}
+
+table tbody tr td.hour {
+	font-size: 1em;
+	padding: 2px;
+	color: white;
+	text-align: right;
+	vertical-align: top;
+	background: #9E9EFF;
+	border-bottom: 1px solid #9E9EFF;
+	border-collapse: separate;
+}
+
+table tbody tr td.hour span {
+	display: block;
+	transform: translateY(-10px);
+}
+
+/*
+//fix button / input box style!!!!
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+button:hover {
+    opacity: 0.8;
+}
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+*/
+
+
+.selected {
+	border: 0.25em solid white;
+	cursor: default;
+}
+
+div .ebox {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ff5f85;
+	color: white;
+	position: absolute;
+	z-index: 5;
+	cursor: pointer;
+}
+
+div .ebox:hover {
+	background-color: #ff99b1;
+}
+
+.ebox.selected:hover {
+	background-color: #ff5f85;
+	cursor: default;
+}
+
+div .ebox.ta_event {
+	background-color: #15b046;
+}
+
+div .ebox.ta_event:hover {
+	background-color: #75d78c;
+}
+
+.ebox.ta_event.selected:hover {
+	background-color: #15b046;
+}
+
+p .etext {
+	font-size:1em;
+}
+
+.popup {
+	display: none;
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.7);
+	padding-top: 60px;
+}
+
+.add-event-content {
+	background-color: #FEFEFE;
+	margin: 5% auto 15% auto;
+	width: 80%;
+}
+
+.replacements-content {
+	background-color: #FEFEFE;
+	margin: 5% auto 15% auto;
+	width: 80%;
+}
+
+.container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	padding: 20px;
+	min-width: 25%;
+	width: auto;
+	background-color: #8080ff;
+	opacity: 1;
+	text-align: center;
+	color: white;
+	border-radius: 5px;
+}
+
+.container h2 {
+	margin-top: 0;
+}
+
+.close {
+	position: absolute;
+	right: 5%;
+	top: 0;
+	color: #000;
+	font-size: 35px;
+	font-weight: bold;
+}
+.close:hover,
+.close:focus {
+	color: white;
+	cursor: pointer;
+}
+
+#repeat_info {
+//	display: none;
+}
+
+.animate {
+	-webkit-animation: fade 1s;
+	-moz-animation: fade 1s;
+	animation: fade 1s
+}
+
+ul {
+	list-style: none;
+	padding-left:0;
+}
+
+.right-click-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #ddddee;
+	opacity: 0.99;
+    color: black;
+    border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.5);
+}
+
+.right-click-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.right-click-menu li:hover {
+    background-color: #1c90f3;
+	color: white;
+}
+
+@-webkit-keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+    
+@-moz-keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+    
+@keyframes fade {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+@media (max-width: 60em) {
+	table thead tr th .long {
+		display: none;
+	}
+
+	table thead tr th .short {
+		display: block;
+	}
+
+	table thead tr th .shortday {
+		display: block;
+	}
+
+	table thead tr th .longday {
+		display: none;
+	}
+}
+
+@media (max-width: 50em) {
+	table thead tr th {
+		font-size: 90%;
+	}
+
+	table tbody tr td.hour {
+		font-size: .85em;
+		width: 6%;
+ 	}
+
+	table tbody tr td.hour span {
+		transform: rotate(270deg);
+		-webkit-transform: rotate(270deg);
+		-moz-transform: rotate(270deg);
+	}
+
+	div .ebox {
+		margin-top: -1px;
+	}
+}
+
+@media (max-width: 45em) {
+	.etext {
+		font-size: 85%;
+	}
+}
+
+@media (max-width: 40em) {
+	.etext {
+		font-size: 75%;
+	}
+}
+
+@media (max-width: 35em) {
+	.etext {
+		font-size: 62%;
+	}
+}
+
+@media (max-width: 30em) {
+	.etext {
+		font-size: 57%;
+	}
+}
+
+@media (max-width: 22em) {
+	table thead tr th .shortday {
+		font-size: .85em;
+	}
+}
