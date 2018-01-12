@@ -5,6 +5,7 @@ http://students.engr.scu.edu/~schaudhr/TA-Emergency-Coverage-System/home.html
 To see how a TA account works, you can use the following credentials:
 
 username: santaclara
+
 password: taemergency
 
 This is a system that lets invited TAs create an account and input their schedules in a calendar.
